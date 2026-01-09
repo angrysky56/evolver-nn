@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "allowImportingTsExtensions": false,
+  "compilerOptions": {
+    "target": "ES2022",
+    "noEmit": true,
+    "module": "ESNext"
+  },
+  "include": ["*.ts"]
+}
