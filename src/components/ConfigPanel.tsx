@@ -1,6 +1,6 @@
-import React from 'react';
-import { Settings, Sliders } from 'lucide-react';
-import { SimulationConfig } from '../engine/simulationEngine';
+import React from "react";
+import { Settings, Sliders } from "lucide-react";
+import { SimulationConfig } from "../engine/simulationEngine";
 
 interface ConfigPanelProps {
   config: SimulationConfig;
@@ -19,11 +19,21 @@ interface ConfigSliderProps {
   format?: (v: number) => string;
 }
 
-const ConfigSlider: React.FC<ConfigSliderProps> = ({ label, value, min, max, step, onChange, format }) => (
+const ConfigSlider: React.FC<ConfigSliderProps> = ({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  format,
+}) => (
   <div className="flex flex-col gap-1">
     <div className="flex justify-between text-[10px]">
       <span className="text-slate-400">{label}</span>
-      <span className="font-mono text-cyan-400">{format ? format(value) : value}</span>
+      <span className="font-mono text-cyan-400">
+        {format ? format(value) : value}
+      </span>
     </div>
     <input
       type="range"
@@ -37,7 +47,12 @@ const ConfigSlider: React.FC<ConfigSliderProps> = ({ label, value, min, max, ste
   </div>
 );
 
-export const ConfigPanel: React.FC<ConfigPanelProps> = ({ config, onConfigChange, isOpen, onToggle }) => {
+export const ConfigPanel: React.FC<ConfigPanelProps> = ({
+  config,
+  onConfigChange,
+  isOpen,
+  onToggle,
+}) => {
   if (!isOpen) {
     return (
       <button
@@ -56,16 +71,25 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({ config, onConfigChange
       <div className="flex items-center justify-between p-3 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <Sliders size={14} className="text-cyan-400" />
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-300">Configuration</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            Configuration
+          </span>
         </div>
-        <button onClick={onToggle} className="text-slate-500 hover:text-white text-lg leading-none">&times;</button>
+        <button
+          onClick={onToggle}
+          className="text-slate-500 hover:text-white text-lg leading-none"
+        >
+          &times;
+        </button>
       </div>
 
       {/* Scrollable Content */}
       <div className="p-4 flex flex-col gap-4 overflow-y-auto">
         {/* Network Structure */}
         <div>
-          <h4 className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-2">Network Structure</h4>
+          <h4 className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-2">
+            Network Structure
+          </h4>
           <div className="flex flex-col gap-3">
             <ConfigSlider
               label="Max Neurons"
@@ -73,7 +97,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({ config, onConfigChange
               min={16}
               max={1024}
               step={16}
-              onChange={(v) => onConfigChange('maxNeurons', v)}
+              onChange={(v) => onConfigChange("maxNeurons", v)}
             />
             <ConfigSlider
               label="Initial Neurons"
@@ -81,100 +105,38 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({ config, onConfigChange
               min={1}
               max={64}
               step={1}
-              onChange={(v) => onConfigChange('initialNeurons', v)}
+              onChange={(v) => onConfigChange("initialNeurons", v)}
             />
           </div>
         </div>
 
-        {/* Learning */}
-        <div>
-          <h4 className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-2">Learning</h4>
-          <div className="flex flex-col gap-3">
-            <ConfigSlider
-              label="Learning Rate"
-              value={config.learningRate}
-              min={0.0001}
-              max={0.1}
-              step={0.0001}
-              onChange={(v) => onConfigChange('learningRate', v)}
-              format={(v) => v.toFixed(4)}
-            />
-            <ConfigSlider
-              label="Prune Threshold"
-              value={config.pruneThreshold}
-              min={0.0001}
-              max={0.1}
-              step={0.0001}
-              onChange={(v) => onConfigChange('pruneThreshold', v)}
-              format={(v) => v.toFixed(4)}
-            />
-
+        {/* AUTOMATION WARNING */}
+        <div className="p-3 bg-slate-950 rounded border border-slate-800">
+          <div className="text-[10px] text-slate-500 mb-1">
+            AUTOMATION ENGAGED
           </div>
+          <p className="text-[9px] text-slate-400 leading-relaxed">
+            Physics parameters (Learning Rate, Leak, etc.) are now fully
+            controlled by the
+            <span className="text-cyan-400"> Regime Driver</span>. Manual
+            overrides have been disabled.
+          </p>
         </div>
 
-        {/* Adaptation */}
+        {/* Adaptation Targets (Meta-Params only) */}
         <div>
-          <h4 className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-2">Adaptation</h4>
+          <h4 className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-2">
+            Goals
+          </h4>
           <div className="flex flex-col gap-3">
-            <ConfigSlider
-              label="Patience Limit"
-              value={config.patienceLimit}
-              min={8}
-              max={256}
-              step={8}
-              onChange={(v) => onConfigChange('patienceLimit', v)}
-            />
             <ConfigSlider
               label="Solved Threshold"
               value={config.solvedThreshold}
               min={0.0001}
               max={0.01}
               step={0.0001}
-              onChange={(v) => onConfigChange('solvedThreshold', v)}
+              onChange={(v) => onConfigChange("solvedThreshold", v)}
               format={(v) => v.toFixed(4)}
-            />
-            <ConfigSlider
-              label="Unlock Threshold"
-              value={config.unlockThreshold}
-              min={0.001}
-              max={0.02}
-              step={0.0005}
-              onChange={(v) => onConfigChange('unlockThreshold', v)}
-              format={(v) => v.toFixed(4)}
-            />
-            <ConfigSlider
-              label="Learning Slope Thresh"
-              value={config.learningSlopeThreshold}
-              min={-0.01}
-              max={0}
-              step={0.0001}
-              onChange={(v) => onConfigChange('learningSlopeThreshold', v)}
-              format={(v) => v.toFixed(4)}
-            />
-          </div>
-        </div>
-
-        {/* Lotka-Volterra */}
-        <div>
-          <h4 className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-2">L-V Dynamics</h4>
-          <div className="flex flex-col gap-3">
-            <ConfigSlider
-              label="Growth Pressure"
-              value={config.lvGrowth}
-              min={0.01}
-              max={1.0}
-              step={0.01}
-              onChange={(v) => onConfigChange('lvGrowth', v)}
-              format={(v) => v.toFixed(2)}
-            />
-            <ConfigSlider
-              label="L-V Decay (Competition)"
-              value={config.lvDecay}
-              min={0.001}
-              max={0.1}
-              step={0.001}
-              onChange={(v) => onConfigChange('lvDecay', v)}
-              format={(v) => v.toFixed(3)}
             />
           </div>
         </div>

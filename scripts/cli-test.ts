@@ -423,8 +423,6 @@ function main(): void {
             stabilitySteps = options.stabilitySteps || 200;
             config = {
                 ...DEFAULT_CONFIG,
-                lvGrowth: options.growth || DEFAULT_CONFIG.lvGrowth,
-                learningRate: options.lr || DEFAULT_CONFIG.learningRate,
                 initialNeurons: options.neurons || DEFAULT_CONFIG.initialNeurons,
             };
             break;
@@ -434,8 +432,6 @@ function main(): void {
             stabilitySteps = options.stabilitySteps || 1000;
             config = {
                 ...DEFAULT_CONFIG,
-                lvGrowth: options.growth || DEFAULT_CONFIG.lvGrowth,
-                learningRate: options.lr || DEFAULT_CONFIG.learningRate,
                 initialNeurons: options.neurons || DEFAULT_CONFIG.initialNeurons,
             };
             break;
@@ -445,8 +441,6 @@ function main(): void {
             stabilitySteps = options.stabilitySteps || 500;
             config = {
                 ...DEFAULT_CONFIG,
-                lvGrowth: options.growth || DEFAULT_CONFIG.lvGrowth,
-                learningRate: options.lr || DEFAULT_CONFIG.learningRate,
                 initialNeurons: options.neurons || DEFAULT_CONFIG.initialNeurons,
             };
             break;
@@ -465,8 +459,7 @@ function main(): void {
         console.log(`   Steps: ${colorize(steps.toString(), 'yellow')}`);
         console.log(`   Stability Steps: ${colorize(stabilitySteps.toString(), 'yellow')}`);
         console.log(`   Initial Neurons: ${colorize(config.initialNeurons?.toString() || '8', 'yellow')}`);
-        console.log(`   Learning Rate: ${colorize(config.learningRate?.toString() || '0.045', 'yellow')}`);
-        console.log(`   LV Growth: ${colorize(config.lvGrowth?.toString() || '0.1', 'yellow')}`);
+        console.log(`   Physics: ${colorize('REGIME DRIVER (Automated)', 'cyan')}`);
     }
 
     // Run test
