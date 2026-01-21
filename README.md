@@ -46,7 +46,8 @@ Watch a neural network **evolve from 64 neurons to 100+**, learning to predict t
 | ---------------------- | ------------------------------------------------------------------------------ |
 | **Reservoir**          | Leaky-integrate-and-fire neurons with fixed random recurrent weights           |
 | **Dale's Law**         | 80% excitatory (+) and 20% inhibitory (−) neurons with strict sign constraints |
-| **Sinkhorn Stability** | Doubly-stochastic normalization prevents spectral explosion                    |
+| **Spectral Norm**      | Power Iteration guarantees Lipschitz < 1 (no chaos explosion)                  |
+| **Feedback Alignment** | Supervised Hebbian learning using random fixed feedback weights                |
 | **L-V Dynamics**       | Weights compete like populations—strong survive, weak die                      |
 | **Lateral Inhibition** | Local competition (5-neighbor kernel) forces feature organization              |
 | **Metabolic Energy**   | Per-neuron energy tracking for activity-based adaptation                       |
@@ -97,20 +98,21 @@ const DEFAULT_CONFIG = {
   patienceLimit: 64, // Steps of stagnation before neurogenesis
   lvGrowth: 0.08, // L-V growth pressure
   lvDecay: 0.006, // L-V decay/competition pressure
-}
+};
 ```
 
 ---
 
 ## 📚 Inspirations
 
-| Paper                                                                                               | Key Insight                                  | How We Use It                |
-| --------------------------------------------------------------------------------------------------- | -------------------------------------------- | ---------------------------- |
-| [**Echo State Networks**](https://www.ai.rug.nl/minds/uploads/EchoStatesTechRep.pdf) (Jaeger, 2001) | Fixed random reservoir + trained readout     | Core architecture            |
-| [**DiscoRL**](https://www.nature.com/articles/s41586-025-09761-x) (Nature, 2025)                    | Meta-network discovers RL update rules       | Bicameral meta-controller    |
-| [**mHC**](https://arxiv.org/abs/2512.24880)                                                         | Doubly stochastic matrices prevent explosion | Sinkhorn-Knopp normalization |
-| [**BrainCraft**](https://github.com/rougier/braincraft) (Rougier, 2025)                             | Embodied neural agent benchmark              | Future integration target    |
-| [**Lotka-Volterra**](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations)                | Predator-prey population dynamics            | Synaptic competition model   |
+| Paper                                                                                               | Key Insight                                  | How We Use It                        |
+| --------------------------------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------------ |
+| [**Echo State Networks**](https://www.ai.rug.nl/minds/uploads/EchoStatesTechRep.pdf) (Jaeger, 2001) | Fixed random reservoir + trained readout     | Core architecture                    |
+| [**DiscoRL**](https://www.nature.com/articles/s41586-025-09761-x) (Nature, 2025)                    | Meta-network discovers RL update rules       | Bicameral meta-controller            |
+| [**mHC**](https://arxiv.org/abs/2512.24880)                                                         | Doubly stochastic matrices prevent explosion | Sinkhorn-Knopp normalization         |
+| [**BrainCraft**](https://github.com/rougier/braincraft) (Rougier, 2025)                             | Embodied neural agent benchmark              | Future integration target            |
+| [**Lotka-Volterra**](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations)                | Predator-prey population dynamics            | Synaptic competition model           |
+| [**Bioplausible**](https://github.com/automenta/bioplausible)                                       | Spectral Normalization & EqProp Stability    | Power Iteration & Feedback Alignment |
 
 ---
 
@@ -119,7 +121,8 @@ const DEFAULT_CONFIG = {
 - [x] Core reservoir with online learning
 - [x] Neurogenesis and synaptic pruning
 - [x] Dale's Law (E-I balance)
-- [x] Sinkhorn-Knopp spectral stability
+- [x] Spectral Normalization (Power Iteration)
+- [x] Feedback Alignment (Supervised Hebbian)
 - [x] Lotka-Volterra weight dynamics
 - [x] Bicameral meta-controller
 - [x] Grandmaster performance on Mackey-Glass
